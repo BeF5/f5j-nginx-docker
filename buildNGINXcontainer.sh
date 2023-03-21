@@ -15,8 +15,8 @@ $0 [options]\n\n
 -p \t\t\t- Push Docker image to registry\n
 "
 
-BASEGITURL="url = https://github.com/BeF5/f5j-nginx-docker.git"
-GITURL=`grep url .git/config`
+GITCONFFILE=".git/config"
+GITCONFFILEPATH="`pwd`/$GITCONFFILE"
 
 # Defaults
 INVALID_WORKDIR=true
@@ -25,14 +25,9 @@ NGINX_CERT=nginx-repo.crt
 NGINX_KEY=nginx-repo.key
 
 # check running directory
-if [[ $GITURL =~ $BASEGITURL ]]
+if [ ! -e $GITCONFFILEPATH ]
 then
-   INVALID_WORKDIR=false
-fi
-
-if "${INVALID_WORKDIR}"
-then
-   echo "Please run this command root directory of f5j-nginx-docker git repository."
+   echo "Please run this command in root directory of git repository. It requires directories stored dockerfiles. (ubuntu20/plus etc)"
    exit
 fi
 
